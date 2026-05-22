@@ -8,9 +8,48 @@
     body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #333; }
     h1 { color: #111; } h2 { color: #444; margin-top: 40px; }
     hr { border: none; border-top: 1px solid #ddd; margin: 40px 0; }
+    #auth-section {
+      display: none;
+      background: #f0fff0;
+      border: 2px solid #4CAF50;
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+    #auth-section h2 { color: #2e7d32; margin-top: 0; }
+    #auth-code {
+      background: #1a1a1a;
+      color: #00ff88;
+      font-family: monospace;
+      font-size: 14px;
+      padding: 16px;
+      border-radius: 6px;
+      word-break: break-all;
+      margin: 12px 0;
+    }
+    #copy-btn {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    #copy-btn:hover { background: #388e3c; }
+    #copy-confirm { color: #2e7d32; font-weight: bold; display: none; margin-left: 12px; }
   </style>
 </head>
 <body>
+
+  <div id="auth-section">
+    <h2>TikTok Authorization — Nadie Te Dijo</h2>
+    <p>Authorization successful. Copy the code below and paste it in the terminal:</p>
+    <div id="auth-code"></div>
+    <button id="copy-btn" onclick="copyCode()">Copy code</button>
+    <span id="copy-confirm">Copied!</span>
+  </div>
+
   <h1>Nadie Te Dijo</h1>
   <p>Official legal pages for the Nadie Te Dijo content channel (@nadie_te_dijo).</p>
 
@@ -32,5 +71,26 @@
   <p>The tool automates the process of uploading pre-created video content to TikTok. No external users interact with this system.</p>
   <p>All content published through this tool is original content created by the channel owner and complies with TikTok's Community Guidelines and Terms of Service.</p>
   <p><strong>Contact:</strong> gerlsk77@gmail.com</p>
+
+  <script>
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var code   = params.get("code");
+      if (code) {
+        var section = document.getElementById("auth-section");
+        var codeEl  = document.getElementById("auth-code");
+        section.style.display = "block";
+        codeEl.textContent    = code;
+        window.scrollTo(0, 0);
+      }
+    })();
+
+    function copyCode() {
+      var code = document.getElementById("auth-code").textContent;
+      navigator.clipboard.writeText(code).then(function() {
+        document.getElementById("copy-confirm").style.display = "inline";
+      });
+    }
+  </script>
 </body>
 </html>
